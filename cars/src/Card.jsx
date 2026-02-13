@@ -6,10 +6,15 @@ function Card({ cars_list }){
 
     const handleClick = (name) => window.alert(`Je hebt op de ${name} gedrukt`);
     
-    const filteredCars = cars_list.filter((car) =>
-        type === "merk"
-            ? car.merk.toLowerCase().includes(search.toLowerCase())
-            : car.voertuigsoort.toLowerCase().includes(search.toLowerCase()))
+    let filteredCars;
+    if (type === "merk") {
+        filteredCars = cars_list.filter(car => car.merk.toLowerCase().includes(search.toLowerCase()));
+    } else if (type === "voertuigsoort") {
+        filteredCars = cars_list.filter(car => car.voertuigsoort.toLowerCase().includes(search.toLowerCase()));
+    } else {
+        filteredCars = cars_list.filter(car => car.kenteken.toLowerCase().includes(search.toLowerCase()));
+    }
+
     
     return (
         <>
@@ -29,6 +34,14 @@ function Card({ cars_list }){
             onChange={(e) => typeSearch(e.target.value)}
             />
             <label>Voertuigsoort</label>
+            <input
+            type="radio"
+            value="kenteken"
+            name="search_choice"
+            checked={type === "kenteken"} 
+            onChange={(e) => typeSearch(e.target.value)}
+            />
+            <label>Kenteken</label>
 
             <input
             type="text"
